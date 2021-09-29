@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Shop</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <table id="wrapper">
+        <tr>
+            <td rowspan="2" id="menu-wrapper">
+                <ul>
+                    <li><a href="index.html">Products</a></li>
+                    <li><a href="shippers.html">Shippers</a></li>
+                    <li><a id="active-menu-item" href="customers.html">Customers</a></li>
+                    <li><a href="orders.html">Orders</a></li>
+                </ul>
+            </td>
+            <td id="header">
+                <a href="sign-in.html">Sign in</a>
+                |
+                <a href="profile.html">Profile</a>
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRc3iMIk2A0xrTAgSRxckchkVvYRwbIgqVcw&usqp=CAU">
+            </td>
+        </tr>
+        <tr>
+            <td id="content-wrapper">
+                <table id="list-customers" border="1">
+                    <tr>
+                        <th width="50">Id</th>
+                        <th width="180">First name</th>
+                        <th width="180">Last name</th>
+                        <th width="70">Birth date</th>
+                        <th>Phone</th>
+                        <th width="160">Address</th>
+                        <th width="70">City</th>
+                        <th width="40">State</th>
+                        <th width="50">Points</th>
+                        <th width="70"></th>
+                        <th width="70"></th>
+                    </tr>
+                    <tr>
+                        <td>13</td>
+                        <td>Bob</td>
+                        <td>Bobson</td>
+                        <td>03-03-1999</td>
+                        <td>+375-29-9999999</td>
+                        <td>88 Sunny str.</td>
+                        <td>Los-Angeles</td>
+                        <td>CA</td>
+                        <td>666</td>
+                        <td class="edit">&#9998;</td>
+                        <td class="delete">&#10008;</td>
+                    </tr>
+                </table>
+
+                <table id="list-pagination">
+                    <tr>
+                        <td width="100%"></td>
+                        <td>&lArr;</td>
+                        <td>2</td>
+                        <td>&rArr;</td>
+                    </tr>
+                </table>
+
+                <hr>
+                <h2>Add new customer:</h2>
+
+                <form>
+                    <label for="first-name">First name:</label><br>
+                    <input name="firstName" id="first-name" type="text">
+                    <br><br>
+                    <label for="last-name">Last Name:</label><br>
+                    <input name="lastName" id="last-name" type="text">
+                    <br><br>
+                    <label for="birth-date">Birth date:</label><br>
+                    <input name="birthDate" id="birth-date" type="date">
+                    <br><br>
+                    <label for="phone">Phone:</label><br>
+                    <input name="phone" id="phone" type="tel">
+                    <br><br>
+                    <label for="address">Address:</label><br>
+                    <input name="address" id="address" type="text">
+                    <br><br>
+                    <label for="city">City:</label><br>
+                    <input name="city" id="city" type="text">
+                    <br><br>
+                    <label for="state">State:</label><br>
+                    <input name="state" id="state" type="text">
+                    <br><br>
+                    <label for="points">Points:</label><br>
+                    <input name="points" id="points" type="number">
+
+                    <input type="submit" value="Save">
+                </form>
+            </td>
+        </tr>
+    </table>
+
+</body>
+</html>
