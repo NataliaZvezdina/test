@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Shop</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" th:href="@{/assets/style.css}">
 </head>
 <body>
 
@@ -11,21 +11,62 @@
         <tr>
             <td rowspan="2" id="menu-wrapper">
                 <ul>
-                    <li><a href="index.html">Products</a></li>
-                    <li><a href="shippers.html">Shippers</a></li>
-                    <li><a href="customers.html">Customers</a></li>
-                    <li><a id="active-menu-item" href="orders.html">Orders</a></li>
+                    <li><a th:href="@{/index}">Products</a></li>
+                    <li><a th:href="@{/shippers}">Shippers</a></li>
+                    <li><a th:href="@{/customers}">Customers</a></li>
+                    <li><a id="active-menu-item" th:href="@{/orders}">Orders</a></li>
                 </ul>
             </td>
             <td id="header">
-                <a href="sign-in.html">Sign in</a>
+                <a th:href="@{/sign-in}">Sign in</a>
                 |
-                <a href="profile.html">Profile</a>
+                <a th:href="@{/profile}">Profile</a>
                 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRc3iMIk2A0xrTAgSRxckchkVvYRwbIgqVcw&usqp=CAU">
             </td>
         </tr>
         <tr>
-            <td id="content-wrapper">3</td>
+            <td id="content-wrapper">
+
+                <table id="list-orders" border="1">
+                    <tr>
+                        <th width="50">OrderId</th>
+                        <th width="50">Customer's last name</th>
+                        <th width="100">Order date</th>
+                        <th width="50">Order status</th>
+                        <th >Comments</th>
+                        <th width="70">Shipped date</th>
+                        <th width="50">Shipper name</th>
+                        <th width="70"></th>
+                        <th width="70"></th>
+                        <th width="70"></th>
+                    </tr>
+
+                    <tr th:each="orderView:${foundOrderViewsDto}">
+                        <td th:text="${orderView.orderId}"></td>
+                        <td th:text="${orderView.customerLastName}"></td>
+                        <td th:text="${orderView.orderDate}"></td>
+                        <td th:text="${orderView.orderStatus}"></td>
+                        <td th:text="${orderView.comments}"></td>
+                        <td th:text="${orderView.shippedDate}"></td>
+                        <td th:text="${orderView.shipperName}"></td>
+                        <td class="edit">&#9998;</td>
+                        <td class="delete">&#10008;</td>
+                        <td><a th:href="@{/orders/{id}(id=${orderView.orderId})}">open</a></td>
+                    </tr>
+                </table>
+
+                <table id="list-pagination">
+                    <tr>
+                        <td width="100%"></td>
+                        <td>&lArr;</td>
+                        <td>1</td>
+                        <td>&rArr;</td>
+                    </tr>
+                </table>
+
+                <hr>
+
+            </td>
         </tr>
     </table>
 

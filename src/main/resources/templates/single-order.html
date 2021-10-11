@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Simple-order</title>
+    <link rel="stylesheet" type="text/css" href="../static/assets/style.css" th:href="@{/assets/style.css}">
+</head>
+<body>
+
+
+<table id="wrapper">
+    <tr>
+        <td rowspan="2" id="menu-wrapper">
+            <ul>
+                <li><a th:href="@{/index}">Products</a></li>
+                <li><a th:href="@{/shippers}">Shippers</a></li>
+                <li><a th:href="@{/customers}">Customers</a></li>
+                <li><a id="active-menu-item" th:href="@{/orders}">Orders</a></li>
+            </ul>
+        </td>
+        <td id="header">
+            <a th:href="@{/sign-in}">Sign in</a>
+            |
+            <a th:href="@{/profile}">Profile</a>
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRc3iMIk2A0xrTAgSRxckchkVvYRwbIgqVcw&usqp=CAU">
+        </td>
+    </tr>
+    <tr>
+        <td id="content-wrapper">
+            <h2>Order:</h2>
+            <hr>
+            <table id="list-single-order" border="1">
+                <tr>
+                    <th width="70">Order Id</th>
+                    <th width="170">Customer's first name</th>
+                    <th width="170">Customer's last name</th>
+                    <th width="110">Phone</th>
+                    <th>Order status</th>
+                    <th>Total price</th>
+                </tr>
+                <tr>
+                    <td th:text="${singleOrder.orderId}"></td>
+                    <td th:text="${customer.firstName}"></td>
+                    <td th:text="${customer.lastName}"></td>
+                    <td th:text="${customer.phone}"></td>
+                    <td th:text="${orderStatus.name}"></td>
+                    <td th:text="${total}"></td>
+                </tr>
+
+            </table>
+
+            <br><br>
+            <h2>Order items:</h2>
+            <hr>
+
+            <table id="list-order-items" border="1" >
+                <tr>
+                    <th width="220">Product name</th>
+                    <th width="100">Quantity</th>
+                    <th width="100">Unit price</th>
+                    <th>Total price</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+
+                <tr th:each="item:${items}">
+                    <td th:text="${item.productName}"></td>
+                    <td th:text="${item.quantity}"></td>
+                    <td th:text="${item.unitPrice}"></td>
+                    <td th:text="${item.totalPrice}"></td>
+                    <td class="edit">&#9998;</td>
+                    <td class="delete">&#10008;</td>
+                </tr>
+            </table>
+
+            <table id="list-pagination">
+                <tr>
+                    <td width="100%"></td>
+                    <td>&lArr;</td>
+                    <td>1</td>
+                    <td>&rArr;</td>
+                </tr>
+            </table>
+            <hr>
+
+        </td>
+    </tr>
+</table>
+
+
+</body>
+</html>

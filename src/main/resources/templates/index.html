@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Shop</title>
-    <!-- <link rel="stylesheet" href="style.css"> -->
+    <link rel="stylesheet" th:href="@{/assets/style.css}">
 </head>
 <body>
 
@@ -11,16 +11,16 @@
         <tr>
             <td rowspan="2" id="menu-wrapper">
                 <ul>
-                    <li><a id="active-menu-item" href="index.html">Products</a></li>
-                    <li><a href="shippers.html">Shippers</a></li>
-                    <li><a href="customers.html">Customers</a></li>
-                    <li><a href="orders.html">Orders</a></li>
+                    <li><a id="active-menu-item" th:href="@{/index}">Products</a></li>
+                    <li><a th:href="@{/shippers}">Shippers</a></li>
+                    <li><a th:href="@{/customers}">Customers</a></li>
+                    <li><a th:href="@{/orders}">Orders</a></li>
                 </ul>
             </td>
             <td id="header">
-                <a href="sign-in.html">Sign in</a>
+                <a th:href="@{/sign-in}">Sign in</a>
                 |
-                <a href="profile.html">Profile</a>
+                <a th:href="@{/profile}">Profile</a>
                 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRc3iMIk2A0xrTAgSRxckchkVvYRwbIgqVcw&usqp=CAU">
             </td>
         </tr>
@@ -50,7 +50,7 @@
                     <tr>
                         <td width="100%"></td>
                         <td>&lArr;</td>
-                        <td>3</td>
+                        <td>1</td>
                         <td>&rArr;</td>
                     </tr>
                 </table>

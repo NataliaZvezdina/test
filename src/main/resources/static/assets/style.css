@@ -1,0 +1,72 @@
+#wrapper {
+    width: 1350px;
+    margin: 0 auto;
+
+  border-collapse: separate;
+  border-spacing: 10px 10px;
+}
+
+body {
+    background-color: #ECECEC;
+    font-family: Verdana;
+}
+
+#menu-wrapper {
+    width: 150px;
+    background-color: #9FBFCA;
+}
+
+#header {
+    height: 30px;
+    text-align: right;
+    padding-right: 30px;
+    background-color: #535D71;
+}
+
+#content-wrapper {
+    height: 800px;
+    background-color: #F6EFE2;
+    vertical-align: top;
+}
+
+#menu-wrapper ul {
+    list-style: none;
+    padding-left: 20px;
+}
+
+#menu-wrapper ul li {
+    margin-top: 30px;
+}
+
+#menu-wrapper ul li a {
+    text-decoration: none;
+    font-family: Verdana;
+    font-size: 20px;
+    color: #535D71;
+}
+
+#active-menu-item {
+    font-weight: bold;
+}
+
+#header img {
+    height: 20px;
+}
+
+#header a {
+    text-decoration: none;
+    font-family: Verdana;
+    color: #F1D08F;
+}
+
+#list-products, #list-orders, #list-customers, #list-shippers, #list-order-items, #list-order-items {
+    width: 100%;
+}
+
+.delete td{
+    text-align: center;
+}
+
+.edit td {
+    text-align: center;
+}
