@@ -14,13 +14,13 @@ public class Customer {
     private String city;
     private String state;
     private int points;
+    private String email;
+    private String password;
 
-    public Customer() {
+    public Customer() {}
 
-    }
-
-    public Customer(int customerId, String firstName, String lastName, Date birthDate, String phone,
-                    String address, String city, String state, int points) {
+    public Customer(int customerId, String firstName, String lastName, Date birthDate, String phone, String address,
+                    String city, String state, int points, String email, String password) {
         this.customerId = customerId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -30,6 +30,8 @@ public class Customer {
         this.city = city;
         this.state = state;
         this.points = points;
+        this.email = email;
+        this.password = password;
     }
 
     public static Builder getBuilder() {
@@ -81,6 +83,16 @@ public class Customer {
 
         public Builder setPoints(int points) {
             customer.points = points;
+            return this;
+        }
+
+        public Builder setEmail(String email) {
+            customer.email = email;
+            return this;
+        }
+
+        public Builder setPassword(String password) {
+            customer.password = password;
             return this;
         }
 
@@ -161,22 +173,38 @@ public class Customer {
         this.points = points;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Customer customer = (Customer) o;
-        return customerId == customer.customerId && points == customer.points && firstName.equals(customer.firstName) && lastName.equals(customer.lastName) && birthDate.equals(customer.birthDate) && phone.equals(customer.phone) && address.equals(customer.address) && city.equals(customer.city) && state.equals(customer.state);
+        return customerId == customer.customerId && points == customer.points && firstName.equals(customer.firstName) && lastName.equals(customer.lastName) && birthDate.equals(customer.birthDate) && phone.equals(customer.phone) && address.equals(customer.address) && city.equals(customer.city) && state.equals(customer.state) && email.equals(customer.email) && password.equals(customer.password);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(customerId, firstName, lastName, birthDate, phone, address, city, state, points);
+        return Objects.hash(customerId, firstName, lastName, birthDate, phone, address, city, state, points, email, password);
     }
 
     @Override
     public String toString() {
-        return "entity.Customer{" +
+        return "Customer{" +
                 "customerId=" + customerId +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
@@ -186,6 +214,7 @@ public class Customer {
                 ", city='" + city + '\'' +
                 ", state='" + state + '\'' +
                 ", points=" + points +
+                ", email='" + email + '\'' +
                 '}';
     }
 }

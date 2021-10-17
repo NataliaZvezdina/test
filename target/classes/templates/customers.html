@@ -29,14 +29,16 @@
                 <table id="list-customers" border="1">
                     <tr>
                         <th width="50">Id</th>
-                        <th width="180">First name</th>
-                        <th width="180">Last name</th>
+                        <th width="150">First name</th>
+                        <th width="150">Last name</th>
                         <th width="70">Birth date</th>
                         <th>Phone</th>
                         <th width="160">Address</th>
                         <th width="70">City</th>
                         <th width="40">State</th>
                         <th width="50">Points</th>
+                        <th width="70">Email</th>
+                        <th width="70"></th>
                         <th width="70"></th>
                         <th width="70"></th>
                     </tr>
@@ -50,8 +52,10 @@
                         <td th:text="${customer.city}"></td>
                         <td th:text="${customer.state}"></td>
                         <td th:text="${customer.points}"></td>
-                        <td class="edit">&#9998;</td>
-                        <td class="delete">&#10008;</td>
+                        <td th:text="${customer.email}"></td>
+                        <td class="edit"><a th:href="@{/customer-update/{id}(id=${customer.customerId})}">&#9998;</a></td>
+                        <td class="delete"><a th:href="@{/customer-delete/{id}(id=${customer.customerId})}">&#10008;</a></td>
+                        <td><a th:href="@{/profile/{id}(id=${customer.customerId})}">Profile</a></td>
                     </tr>
                 </table>
 
@@ -65,35 +69,8 @@
                 </table>
 
                 <hr>
-                <h2>Add new customer:</h2>
+                <h2><a th:href="@{/customer-create}">Add new customer</a></h2>
 
-                <form>
-                    <label for="first-name">First name:</label><br>
-                    <input name="firstName" id="first-name" type="text">
-                    <br><br>
-                    <label for="last-name">Last Name:</label><br>
-                    <input name="lastName" id="last-name" type="text">
-                    <br><br>
-                    <label for="birth-date">Birth date:</label><br>
-                    <input name="birthDate" id="birth-date" type="date">
-                    <br><br>
-                    <label for="phone">Phone:</label><br>
-                    <input name="phone" id="phone" type="tel">
-                    <br><br>
-                    <label for="address">Address:</label><br>
-                    <input name="address" id="address" type="text">
-                    <br><br>
-                    <label for="city">City:</label><br>
-                    <input name="city" id="city" type="text">
-                    <br><br>
-                    <label for="state">State:</label><br>
-                    <input name="state" id="state" type="text">
-                    <br><br>
-                    <label for="points">Points:</label><br>
-                    <input name="points" id="points" type="number">
-
-                    <input type="submit" value="Save">
-                </form>
             </td>
         </tr>
     </table>

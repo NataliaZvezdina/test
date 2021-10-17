@@ -3,6 +3,7 @@ package by.itstep.zvezdina.orders.repository;
 import by.itstep.zvezdina.orders.entity.OrderStatus;
 import by.itstep.zvezdina.orders.mapper.OrderStatusMapper;
 import by.itstep.zvezdina.orders.utils.ConnectionUtils;
+import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
+@Repository
 public class OrderStatusRepository {
 
     private final OrderStatusMapper orderStatusMapper = new OrderStatusMapper();

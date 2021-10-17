@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Shop</title>
+    <link rel="stylesheet" th:href="@{/assets/style.css}">
+</head>
+<body>
+
+<table id="wrapper">
+    <tr>
+        <td rowspan="2" id="menu-wrapper">
+            <ul>
+                <li><a th:href="@{/index}">Products</a></li>
+                <li><a id="active-menu-item" th:href="@{/shippers}">Shippers</a></li>
+                <li><a th:href="@{/customers}">Customers</a></li>
+                <li><a th:href="@{/orders}">Orders</a></li>
+            </ul>
+        </td>
+        <td id="header">
+            <a th:href="@{/sign-in}">Sign in</a>
+            |
+            <a th:href="@{/profile}">Profile</a>
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRc3iMIk2A0xrTAgSRxckchkVvYRwbIgqVcw&usqp=CAU">
+        </td>
+    </tr>
+    <tr>
+        <td id="content-wrapper">
+            <form action="#" th:action="@{/shipper-create}" th:object="${shipper}" method="post">
+                <label for="name">Name:</label><br>
+                <input name="name" id="name" type="text">
+
+                <input type="submit" value="Save">
+            </form>
+        </td>
+    </tr>
+</table>
+
+</body>
+</html>

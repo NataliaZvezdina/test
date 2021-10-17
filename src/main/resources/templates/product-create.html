@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create product</title>
+    <link rel="stylesheet" th:href="@{/assets/style.css}">
+</head>
+<body>
+
+<table id="wrapper">
+    <tr>
+        <td rowspan="2" id="menu-wrapper">
+            <ul>
+                <li><a id="active-menu-item" th:href="@{/index}">Products</a></li>
+                <li><a th:href="@{/shippers}">Shippers</a></li>
+                <li><a th:href="@{/customers}">Customers</a></li>
+                <li><a th:href="@{/orders}">Orders</a></li>
+            </ul>
+        </td>
+        <td id="header">
+            <a th:href="@{/sign-in}">Sign in</a>
+            |
+            <a th:href="@{/profile}">Profile</a>
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRc3iMIk2A0xrTAgSRxckchkVvYRwbIgqVcw&usqp=CAU">
+        </td>
+    </tr>
+    <tr>
+        <td id="content-wrapper">
+
+            <form action="#" th:action="@{/product-create}" th:object="${product}" method="post">
+                <label for="name">Name:</label><br>
+                <input name="name" id="name" type="text">
+                <br><br>
+
+                <label for="quantity-in-stock">Quantity in stock:</label><br>
+                <input name="quantityInStock" id="quantity-in-stock" type="number">
+                <br><br>
+                <label for="price">Price, $:</label><br>
+                <input name="unitPrice" id="price" type="number" step="0.01" min="0">
+                <br><br>
+
+                <input type="submit" value="Save">
+            </form>
+        </td>
+    </tr>
+</table>
+
+</body>
+</html>

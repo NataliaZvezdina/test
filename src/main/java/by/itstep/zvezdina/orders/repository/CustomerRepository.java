@@ -3,6 +3,7 @@ package by.itstep.zvezdina.orders.repository;
 import by.itstep.zvezdina.orders.entity.Customer;
 import by.itstep.zvezdina.orders.mapper.CustomerMapper;
 import by.itstep.zvezdina.orders.utils.ConnectionUtils;
+import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,14 +13,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
+@Repository
 public class CustomerRepository {
 
     private final CustomerMapper customerMapper = new CustomerMapper();
     private static final Logger logger = Logger.getLogger(CustomerRepository.class.getName());
 
     private static final String INSERT_QUERY =
-            "INSERT INTO customers(first_name, last_name, birth_date, phone, address, city, state, points) " +
-            "VALUES(?, ?, ?, ?, ?, ?, ?, ?);";
+            "INSERT INTO customers(first_name, last_name, birth_date, phone, address, city, state, points, email, password) " +
+            "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 
     private static final String FIND_BY_ID_QUERY = "SELECT * " +
                                                      "FROM customers " +
@@ -34,7 +36,7 @@ public class CustomerRepository {
 
     private static final String UPDATE_QUERY = "UPDATE customers " +
                                                 "SET first_name = ?, last_name = ?, birth_date = ?, phone = ?, " +
-                                                    "address = ?, city = ?, state = ?, points = ? " +
+                                                    "address = ?, city = ?, state = ?, points = ?, email = ?, password = ? " +
                                                 "WHERE customer_id = ?;";
 
     private static final String DELETE_BY_ID_QUERY = "DELETE FROM customers " +
@@ -52,6 +54,8 @@ public class CustomerRepository {
             pstmt.setString(6, customer.getCity());
             pstmt.setString(7, customer.getState());
             pstmt.setInt(8, customer.getPoints());
+            pstmt.setString(9, customer.getEmail());
+            pstmt.setString(10, customer.getPassword());
 
             int savedRows = pstmt.executeUpdate();
             logger.info(savedRows + " customer(s) was saved successfully.");
@@ -138,7 +142,9 @@ public class CustomerRepository {
             pstmt.setString(6, customer.getCity());
             pstmt.setString(7, customer.getState());
             pstmt.setInt(8, customer.getPoints());
-            pstmt.setInt(9, customer.getCustomerId());
+            pstmt.setString(9, customer.getEmail());
+            pstmt.setString(10, customer.getPassword());
+            pstmt.setInt(11, customer.getCustomerId());
 
             int updatedRows = pstmt.executeUpdate();
             logger.info(updatedRows + " customer(s) was updated.");

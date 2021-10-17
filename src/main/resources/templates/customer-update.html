@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <meta charset="UTF-8">
+    <title>Update customer</title>
+    <link rel="stylesheet" th:href="@{/assets/style.css}">
+</head>
+<body>
+
+<table id="wrapper">
+    <tr>
+        <td rowspan="2" id="menu-wrapper">
+            <ul>
+                <li><a th:href="@{/index}">Products</a></li>
+                <li><a th:href="@{/shippers}">Shippers</a></li>
+                <li><a id="active-menu-item" th:href="@{/customers}">Customers</a></li>
+                <li><a th:href="@{/orders}">Orders</a></li>
+            </ul>
+        </td>
+        <td id="header">
+            <a th:href="@{/sign-in}">Sign in</a>
+            |
+            <a th:href="@{/profile}">Profile</a>
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRc3iMIk2A0xrTAgSRxckchkVvYRwbIgqVcw&usqp=CAU">
+        </td>
+    </tr>
+    <tr>
+        <td id="content-wrapper">
+            <form action="#" th:action="@{/customer-update}" th:object="${customer}" method="post">
+                <label for="id">Id</label><br>
+                <input readonly name="id" type="number" th:field="*{customerId}" id="id">
+                <br><br>
+                <label for="first-name">First name:</label><br>
+                <input name="firstName" type="text" th:field="*{firstName}" id="first-name" placeholder="First name">
+                <br><br>
+                <label for="last-name">Last Name:</label><br>
+                <input name="lastName" type="text" th:field="*{lastName}" id="last-name" placeholder="Last name">
+                <br><br>
+                <label for="birth-date">Birth date:</label><br>
+                <input name="birthDate" type="date" th:field="*{birthDate}" id="birth-date" placeholder="Birth date">
+                <br><br>
+                <label for="phone">Phone:</label><br>
+                <input name="phone" type="tel" th:field="*{phone}" id="phone" placeholder="Phone">
+                <br><br>
+                <label for="address">Address:</label><br>
+                <input name="address" type="text" th:field="*{address}" id="address" placeholder="Address">
+                <br><br>
+                <label for="city">City:</label><br>
+                <input name="city" type="text" th:field="*{city}" id="city" placeholder="City">
+                <br><br>
+                <label for="state">State:</label><br>
+                <input name="state" type="text" th:field="*{state}" id="state" placeholder="State">
+                <br><br>
+                <label for="points">Points:</label><br>
+                <input name="points" type="number" th:field="*{points}" id="points" placeholder="Points">
+                <br><br>
+
+                <label for="email">Email</label><br>
+                <input name="email" type="text" th:field="*{email}" id="email">
+                <br><br>
+
+                <label for="password">Password</label><br>
+                <input name="password" type="password" th:field="*{password}" id="password">
+                <br><br>
+
+
+                <input type="submit" value="Update">
+            </form>
+        </td>
+    </tr>
+</table>
+
+</body>
+</html>

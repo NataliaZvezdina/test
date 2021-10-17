@@ -8,7 +8,7 @@ import java.sql.SQLException;
 public class CustomerMapper {
 
     public Customer extract(ResultSet rs) throws SQLException {
-
+        System.out.println("Customer mapper");
         return Customer.getBuilder()
                        .setCustomerId(rs.getInt("customer_id"))
                        .setFirstName(rs.getString("first_name"))
@@ -19,6 +19,8 @@ public class CustomerMapper {
                        .setCity(rs.getString("city"))
                        .setState(rs.getString("state"))
                        .setPoints(rs.getInt("points"))
+                       .setEmail(rs.getString("email"))
+                       .setPassword(rs.getString("password"))
                        .build();
 
     }

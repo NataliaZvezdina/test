@@ -2,6 +2,7 @@ package by.itstep.zvezdina.orders.service;
 
 import by.itstep.zvezdina.orders.dto.ItemViewDto;
 import by.itstep.zvezdina.orders.utils.ConnectionUtils;
+import org.springframework.stereotype.Service;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,6 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class ItemViewDtoService {
 
 //    private static final String FIND_ALL_BY_ORDER_ID_QUERY = "SELECT products.product_id, products.name, " +
