@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <meta charset="UTF-8">
+    <title>Sign up</title>
+    <link rel="stylesheet" th:href="@{/assets/style.css}">
+</head>
+<body>
+
+<table id="wrapper">
+    <tr>
+        <td rowspan="2" id="menu-wrapper">
+            <ul>
+                <li>Products</li>
+                <li>Shippers</li>
+                <li>Customers</li>
+                <li>Orders</li>
+            </ul>
+        </td>
+        <td id="header">
+            <a th:href="@{/sign-in}">Sign in</a>
+            |
+            <a id="active-menu-item" th:href="@{/sign-up}">Sign up</a>
+        </td>
+    </tr>
+    <tr>
+        <td id="content-wrapper">
+
+            <form action="#" th:action="@{/sign-up}" th:object="${customerToCreate}" method="post">
+                <label for="email">Email:</label><br>
+                <input th:field="*{email}" id="email" type="text" required>
+                <br><br>
+                <label for="password">Password</label><br>
+                <input th:field="*{password}" id="password" type="password" required><br><br><br>
+
+                <label for="first-name">First name:</label><br>
+                <input th:field="*{firstName}" id="first-name" type="text" required>
+                <br><br>
+                <label for="last-name">Last Name:</label><br>
+                <input th:field="*{lastName}"  id="last-name" type="text" required>
+                <br><br>
+                <label for="birth-date">Birth date:</label><br>
+                <input th:field="*{birthDate}" id="birth-date" type="date" required>
+                <br><br>
+                <label for="phone">Phone:</label><br>
+                <input th:field="*{phone}" id="phone" type="tel" required>
+                <br><br>
+                <label for="address">Address:</label><br>
+                <input th:field="*{address}" id="address" type="text" required>
+                <br><br>
+                <label for="city">City:</label><br>
+                <input th:field="*{city}" id="city" type="text" required>
+                <br><br>
+                <label for="state">State:</label><br>
+                <input th:field="*{state}" id="state" type="text" required>
+                <br><br>
+                <label for="points">Points:</label><br>
+                <input th:field="*{points}" id="points" type="number" min="0" required>
+                <br><br>
+
+                <input type="submit" value="Sign up">
+            </form>
+        </td>
+    </tr>
+</table>
+
+</body>
+</html>

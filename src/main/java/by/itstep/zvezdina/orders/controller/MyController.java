@@ -1,14 +1,15 @@
 package by.itstep.zvezdina.orders.controller;
 
-import by.itstep.zvezdina.orders.dto.CustomerSignInDto;
+import by.itstep.zvezdina.orders.dto.customer.CustomerSignInDto;
 import by.itstep.zvezdina.orders.dto.ItemViewDto;
 import by.itstep.zvezdina.orders.dto.OrderViewDto;
 import by.itstep.zvezdina.orders.dto.customer.CustomerCreateDto;
+import by.itstep.zvezdina.orders.dto.customer.CustomerUpdateDto;
+import by.itstep.zvezdina.orders.dto.product.ProductCreateDto;
+import by.itstep.zvezdina.orders.dto.shipper.ShipperCreateDto;
 import by.itstep.zvezdina.orders.entity.*;
 import by.itstep.zvezdina.orders.repository.*;
-import by.itstep.zvezdina.orders.service.CustomerDtoService;
-import by.itstep.zvezdina.orders.service.ItemViewDtoService;
-import by.itstep.zvezdina.orders.service.OrderViewDtoService;
+import by.itstep.zvezdina.orders.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,6 +33,8 @@ public class MyController {
     private final ItemViewDtoService itemViewDtoService;
     private final OrderViewDtoService orderViewDtoService;
     private final CustomerDtoService customerDtoService;
+    private final ProductDtoService productDtoService;
+    private final ShipperDtoService shipperDtoService;
 
 
     @Autowired
@@ -39,7 +42,8 @@ public class MyController {
                         CustomerRepository customerRepository, OrderRepository orderRepository,
                         OrderItemRepository orderItemRepository, OrderStatusRepository orderStatusRepository,
                         ItemViewDtoService itemViewDtoService, OrderViewDtoService orderViewDtoService,
-                        CustomerDtoService customerDtoService) {
+                        CustomerDtoService customerDtoService, ProductDtoService productDtoService,
+                        ShipperDtoService shipperDtoService) {
         this.productRepository = productRepository;
         this.shipperRepository = shipperRepository;
         this.customerRepository = customerRepository;
@@ -49,7 +53,8 @@ public class MyController {
         this.itemViewDtoService = itemViewDtoService;
         this.orderViewDtoService = orderViewDtoService;
         this.customerDtoService = customerDtoService;
-
+        this.productDtoService = productDtoService;
+        this.shipperDtoService = shipperDtoService;
     }
 
 
@@ -93,18 +98,6 @@ public class MyController {
         }
     }
 
-    @GetMapping("/customer-create")
-    public String createCustomerForm(CustomerCreateDto customer) {
-        return "customer-create";
-    }
-
-    @PostMapping("/customer-create")
-    public String createCustomer(CustomerCreateDto customer) {
-        //customerRepository.create(customer);
-        customerDtoService.createCustomerFullDto(customer);
-        return "redirect:/customers";
-    }
-
     @GetMapping("/customer-delete/{id}")
     public String deleteCustomer(@PathVariable int id) {
         customerRepository.deleteById(id);
@@ -112,16 +105,16 @@ public class MyController {
     }
 
     @GetMapping("/customer-update/{id}")
-    public String updateCustomerForm(Model model, @PathVariable int id) {
-        Customer customer = customerRepository.findById(id);
-        System.out.println("Found customer to update");
-        model.addAttribute("customer", customer);
+    public String getUpdateCustomerForm(Model model, @PathVariable int id) {
+        CustomerUpdateDto customerToUpdate = customerDtoService.findById(id);
+        model.addAttribute("customerToUpdate", customerToUpdate);
         return "customer-update";
     }
 
+
     @PostMapping("/customer-update")
-    public String updateCustomer(Customer customer) {
-        customerRepository.update(customer);
+    public String updateCustomer(CustomerUpdateDto customer) {
+        customerDtoService.update(customer);
         return "redirect:/customers";
     }
 
@@ -178,42 +171,60 @@ public class MyController {
         }
     }
 
-    @GetMapping("/sign-in-page")
-    public String getSignInForm(CustomerSignInDto customer) {
+    @GetMapping("/sign-in")
+    public String getSignInForm(Model model) {
+        CustomerSignInDto request = new CustomerSignInDto();
+        model.addAttribute("request", request);
         return "sign-in";
     }
 
     @PostMapping("/sign-in")
-    public String getCustomerSignIn(CustomerSignInDto customer) {
-        Optional<Customer> found = customerDtoService.findByEmail(customer.getEmail());
+    public String authorize(CustomerSignInDto request) {
+        Optional<Customer> found = customerDtoService.findByEmail(request.getEmail());
         if (found.isPresent()) {
             int id = found.get().getCustomerId();
-            if (found.get().getPassword().equals(customer.getPassword())) {
+            if (found.get().getPassword().equals(request.getPassword())) {
                 return "redirect:/profile/" + id;
             }
         }
-        return "redirect:/sign-in-page";
+        return "redirect:/sign-in";
+    }
+
+    @GetMapping("/sign-up")
+    public String getSignUpForm(Model model) {
+        model.addAttribute("customerToCreate", new CustomerCreateDto());
+        return "sign-up";
+    }
+
+    @PostMapping("/sign-up")
+    public String register(CustomerCreateDto customerToCreate) {
+        customerDtoService.create(customerToCreate);
+        return "redirect:/index";
     }
 
     @GetMapping("/product-create")
-    public String createProductForm(Product product) {
+    public String createProductForm(Model model) {
+        ProductCreateDto productToCreate = new ProductCreateDto();
+        model.addAttribute("productToCreate", productToCreate);
         return "product-create";
     }
 
     @PostMapping("/product-create")
-    public String createProduct(Product product) {
-        productRepository.create(product);
+    public String createProduct(ProductCreateDto product) {
+        productDtoService.createProduct(product);
         return "redirect:/index";
     }
 
     @GetMapping("/shipper-create")
-    public String createShipperForm(Shipper shipper) {
+    public String createShipperForm(Model model) {
+        ShipperCreateDto shipperToCreate = new ShipperCreateDto();
+        model.addAttribute("shipperToCreate", shipperToCreate);
         return "/shipper-create";
     }
 
     @PostMapping("shipper-create")
-    public String createShipper(Shipper shipper) {
-        shipperRepository.create(shipper);
+    public String createShipper(ShipperCreateDto shipper) {
+        shipperDtoService.createShipper(shipper);
         return "redirect:/shippers";
     }
 }

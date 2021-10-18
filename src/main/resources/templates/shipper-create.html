@@ -26,9 +26,9 @@
     </tr>
     <tr>
         <td id="content-wrapper">
-            <form action="#" th:action="@{/shipper-create}" th:object="${shipper}" method="post">
+            <form action="#" th:action="@{/shipper-create}" th:object="${shipperToCreate}" method="post">
                 <label for="name">Name:</label><br>
-                <input name="name" id="name" type="text">
+                <input th:field="*{name}" id="name" type="text">
 
                 <input type="submit" value="Save">
             </form>

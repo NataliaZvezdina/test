@@ -109,27 +109,6 @@ public class CustomerRepository {
         }
     }
 
-    public List<Customer> findByState(String state) {
-        try(Connection con = ConnectionUtils.getConnection();
-            PreparedStatement pstmt = con.prepareStatement(FIND_BY_STATE_QUERY)) {
-
-            pstmt.setString(1, state);
-
-            try(ResultSet rs = pstmt.executeQuery()) {
-
-                List<Customer> foundCustomers = new ArrayList<>();
-                while (rs.next()) {
-                    Customer foundCustomer = customerMapper.extract(rs);
-                    foundCustomers.add(foundCustomer);
-                }
-                return foundCustomers;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Error while finding customers", e);
-        }
-    }
-
     public void update(Customer customer) {
         try(Connection con = ConnectionUtils.getConnection();
             PreparedStatement pstmt = con.prepareStatement(UPDATE_QUERY)) {

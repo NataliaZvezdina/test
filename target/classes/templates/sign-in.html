@@ -7,47 +7,45 @@
 </head>
 <body>
 
-    <table id="wrapper">
-        <tr>
-            <td rowspan="2" id="menu-wrapper">
-                <ul>
-                    <li><a th:href="@{/index}">Products</a></li>
-                    <li><a th:href="@{/shippers}">Shippers</a></li>
-                    <li><a th:href="@{/customers}">Customers</a></li>
-                    <li><a th:href="@{/orders}">Orders</a></li>
-                </ul>
-            </td>
-            <td id="header">
-                <a id="active-menu-item" th:href="@{/sign-in}">Sign in</a>
-                |
-                <a th:href="@{/profile}">Profile</a>
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRc3iMIk2A0xrTAgSRxckchkVvYRwbIgqVcw&usqp=CAU">
-            </td>
-        </tr>
-        <tr>
-            <td id="content-wrapper">
+<table id="wrapper">
+    <tr>
+        <td rowspan="2" id="menu-wrapper">
+            <ul>
+                <li><a th:href="@{/index}">Products</a></li>
+                <li><a th:href="@{/shippers}">Shippers</a></li>
+                <li><a th:href="@{/customers}">Customers</a></li>
+                <li><a th:href="@{/orders}">Orders</a></li>
+            </ul>
+        </td>
+        <td id="header">
+            <a id="active-menu-item" th:href="@{/sign-in}">Sign in</a>
+            |
+            <a th:href="@{/sign-up}">Sign up</a>
+        </td>
+    </tr>
+    <tr>
+        <td id="content-wrapper">
 
-                <p>Please fill in login and password to log into your account.</p>
+            <p>Please fill in login and password to log into your account.</p>
 
-                <form action="#" th:action="@{/sign-in}" th:object="${customer}" method="post">
+            <form action="#" th:action="@{/sign-in}" th:object="${request}" method="post">
+                <label for="email"><b>Enter email:</b></label><br>
+                <input type="text" id="email" th:field="*{email}" required><br><br>
 
-                    <label for="email"><b>Enter email</b></label><br>
-                    <input type="text" id="email" name="email" required><br><br>
+                <label for="password"><b>Enter password:</b></label><br>
+                <input type="password" id="password" th:field="*{password}" required><br>
 
-                <label for="password"><b>Password</b></label><br>
-                <input type="password" id="password" name="password" required><br>
+                <!--
+            <label for="password-repeat"><b>Repeat Password</b></label>
+            <input type="password" id="password-repeat" placeholder="Repeat Password" name="psw-repeat" required>
 
-                    <!--
-                <label for="password-repeat"><b>Repeat Password</b></label>
-                <input type="password" id="password-repeat" placeholder="Repeat Password" name="psw-repeat" required>
-
-                    <button type="button" class="cancelbtn">Cancel</button>
-                    -->
-                    <button type="submit" class="signinbtn">Sign Up</button>
-                </form>
-            </td>
-        </tr>
-    </table>
+                <button type="button" class="cancelbtn">Cancel</button>
+                -->
+                <button type="submit" class="signinbtn">Sign In</button>
+            </form>
+        </td>
+    </tr>
+</table>
 
 </body>
 </html>

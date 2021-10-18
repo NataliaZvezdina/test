@@ -1,4 +1,4 @@
-package by.itstep.zvezdina.orders.dto;
+package by.itstep.zvezdina.orders.dto.customer;
 
 import java.util.Objects;
 
@@ -6,6 +6,8 @@ public class CustomerSignInDto {
 
     private String email;
     private String password;
+
+    public CustomerSignInDto() {}
 
     public CustomerSignInDto(String email, String password) {
         this.email = email;

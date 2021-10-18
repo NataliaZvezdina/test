@@ -1,11 +1,14 @@
 package by.itstep.zvezdina.orders.service;
 
 import by.itstep.zvezdina.orders.dto.customer.CustomerCreateDto;
+import by.itstep.zvezdina.orders.dto.customer.CustomerUpdateDto;
+import by.itstep.zvezdina.orders.dto.customer.CustomerViewDto;
 import by.itstep.zvezdina.orders.entity.Customer;
 import by.itstep.zvezdina.orders.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -25,7 +28,7 @@ public class CustomerDtoService {
                 .findAny();
     }
 
-    public void createCustomerFullDto(CustomerCreateDto customer) {
+    public void create(CustomerCreateDto customer) {
         Customer c = Customer.getBuilder()
                 .setFirstName(customer.getFirstName())
                 .setLastName(customer.getLastName())
@@ -40,5 +43,31 @@ public class CustomerDtoService {
                 .build();
 
         customerRepository.create(c);
+    }
+
+    public CustomerUpdateDto findById(int id) {
+        Customer found = customerRepository.findById(id);
+        return new CustomerUpdateDto(found.getCustomerId(), found.getFirstName(), found.getLastName(),
+                found.getBirthDate(), found.getPhone(), found.getAddress(), found.getCity(),
+                found.getState(), found.getPoints());
+    }
+
+    public void update(CustomerUpdateDto customerToUpdate) {
+        Customer old = customerRepository.findById(customerToUpdate.getCustomerId());
+        Customer newOne = Customer.getBuilder()
+                .setCustomerId(customerToUpdate.getCustomerId())
+                .setFirstName(customerToUpdate.getFirstName())
+                .setLastName(customerToUpdate.getLastName())
+                .setBirthDate(customerToUpdate.getBirthDate())
+                .setPhone(customerToUpdate.getPhone())
+                .setAddress(customerToUpdate.getAddress())
+                .setCity(customerToUpdate.getCity())
+                .setState(customerToUpdate.getState())
+                .setPoints(customerToUpdate.getPoints())
+                .setEmail(old.getEmail())
+                .setPassword(old.getPassword())
+                .build();
+
+        customerRepository.update(newOne);
     }
 }

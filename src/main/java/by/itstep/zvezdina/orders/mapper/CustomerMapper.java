@@ -8,7 +8,6 @@ import java.sql.SQLException;
 public class CustomerMapper {
 
     public Customer extract(ResultSet rs) throws SQLException {
-        System.out.println("Customer mapper");
         return Customer.getBuilder()
                        .setCustomerId(rs.getInt("customer_id"))
                        .setFirstName(rs.getString("first_name"))
