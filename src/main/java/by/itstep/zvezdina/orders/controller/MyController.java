@@ -57,7 +57,6 @@ public class MyController {
         this.shipperDtoService = shipperDtoService;
     }
 
-
     @GetMapping ("/index")
     public String getIndex(Model model) {
 
