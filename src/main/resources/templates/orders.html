@@ -50,7 +50,7 @@
                         <td th:text="${orderView.shippedDate}"></td>
                         <td th:text="${orderView.shipperName}"></td>
                         <td class="edit">&#9998;</td>
-                        <td class="delete">&#10008;</td>
+                        <td class="delete"><a th:href="@{/order-delete/{id}(id=${orderView.orderId})}">&#10008;</a></td>
                         <td><a th:href="@{/orders/{id}(id=${orderView.orderId})}">open</a></td>
                     </tr>
                 </table>

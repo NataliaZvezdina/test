@@ -18,10 +18,10 @@
                 </ul>
             </td>
             <td id="header">
-                <a th:href="@{/sign-in}">Sign in</a>
-                |
-                <a th:href="@{/profile}">Profile</a>
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRc3iMIk2A0xrTAgSRxckchkVvYRwbIgqVcw&usqp=CAU">
+                <a th:unless="${isLoggedIn}" th:href="@{/sign-in}">Sign in</a>
+                <span th:if="${isLoggedIn}" th:text="${customerFullName}"></span>
+                <a th:if="${isLoggedIn}" th:href="@{/profile}">Profile</a>
+                <img th:if="${isLoggedIn}" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRc3iMIk2A0xrTAgSRxckchkVvYRwbIgqVcw&usqp=CAU">
             </td>
         </tr>
         <tr>
@@ -42,16 +42,18 @@
                         <td th:text="${product.quantityInStock}"></td>
                         <td th:text="${product.unitPrice}"></td>
                         <td class="edit">&#9998;</td>
-                        <td class="delete">&#10008;</td>
+                        <td class="delete"><a th:href="@{/product-delete/{id}(id=${product.productId})}">&#10008;</a></td>
                     </tr>
 
                 </table>
                 <table id="list-pagination">
                     <tr>
                         <td width="100%"></td>
-                        <td>&lArr;</td>
-                        <td>1</td>
-                        <td>&rArr;</td>
+                        <td th:if="${currentPage}>1">
+                            <a th:href="@{/index?page={previous}(previous=${currentPage}-1)}">&lArr;</a>
+                        </td>
+                        <td th:text="${currentPage}"></td>
+                        <td><a th:href="@{/index?page={next}(next=${currentPage}+1)}">&rArr;</a></td>
                     </tr>
                 </table>
                 <hr>

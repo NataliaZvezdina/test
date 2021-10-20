@@ -9,6 +9,7 @@ import by.itstep.zvezdina.orders.dto.product.ProductCreateDto;
 import by.itstep.zvezdina.orders.dto.shipper.ShipperCreateDto;
 import by.itstep.zvezdina.orders.entity.*;
 import by.itstep.zvezdina.orders.repository.*;
+
 import by.itstep.zvezdina.orders.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import static by.itstep.zvezdina.orders.security.SecurityService.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -58,14 +62,25 @@ public class MyController {
     }
 
     @GetMapping ("/index")
-    public String getIndex(Model model) {
+    public String getIndex(Model model, @RequestParam(name = "page", defaultValue = "1") Integer page) {
+        if (!isLoggedIn()) {
+            return "redirect:/sign-in";
+        }
 
         try {
-            List<Product> foundProducts = productRepository.findAll();
+            List<Product> foundProducts = productRepository.getPage(page);
             System.out.println("Found products: ");
             System.out.println(foundProducts);
 
             model.addAttribute("foundProducts", foundProducts);
+            model.addAttribute("isLoggedIn", isLoggedIn());
+            model.addAttribute("userId", getUserId());
+            model.addAttribute("currentPage", page);
+
+            Customer onlineCustomer = customerRepository.findById(getUserId());
+            model.addAttribute("customerFullName", onlineCustomer.getFirstName() + " " +
+                    onlineCustomer.getLastName());
+
             return "index";
         } catch (Exception e) {
             e.printStackTrace();
@@ -75,6 +90,9 @@ public class MyController {
 
     @GetMapping("/shippers")
     public String getShippers(Model model) {
+        if (!isLoggedIn()) {
+            return "redirect:/sign-in";
+        }
         try {
             List<Shipper> foundShippers = shipperRepository.findAll();
             model.addAttribute("foundShippers", foundShippers);
@@ -87,6 +105,9 @@ public class MyController {
 
     @GetMapping("/customers")
     public String getCustomers(Model model) {
+        if (!isLoggedIn()) {
+            return "redirect:/sign-in";
+        }
         try {
             List<Customer> foundCustomers = customerRepository.findAll();
             model.addAttribute("foundCustomers", foundCustomers);
@@ -99,12 +120,18 @@ public class MyController {
 
     @GetMapping("/customer-delete/{id}")
     public String deleteCustomer(@PathVariable int id) {
+        if (!isLoggedIn()) {
+            return "redirect:/sign-in";
+        }
         customerRepository.deleteById(id);
         return "redirect:/customers";
     }
 
     @GetMapping("/customer-update/{id}")
     public String getUpdateCustomerForm(Model model, @PathVariable int id) {
+        if (!isLoggedIn()) {
+            return "redirect:/sign-in";
+        }
         CustomerUpdateDto customerToUpdate = customerDtoService.findById(id);
         model.addAttribute("customerToUpdate", customerToUpdate);
         return "customer-update";
@@ -119,6 +146,9 @@ public class MyController {
 
     @GetMapping("/profile/{id}")
     public String getSingleCustomer(Model model, @PathVariable int id) {
+        if (!isLoggedIn()) {
+            return "redirect:/sign-in";
+        }
         Customer customer = customerRepository.findById(id);
         List<OrderViewDto> orders = orderViewDtoService.findAllByCustomerId(id);
         model.addAttribute("customer", customer);
@@ -129,6 +159,9 @@ public class MyController {
 
     @GetMapping("/orders")
     public String getOrders(Model model) {
+        if (!isLoggedIn()) {
+            return "redirect:/sign-in";
+        }
         try {
             List<Order> foundOrders = orderRepository.findAll();
             List<OrderViewDto> foundOrderViewsDto = orderViewDtoService.findAll();
@@ -143,6 +176,9 @@ public class MyController {
 
     @GetMapping("/orders/{id}")
     public String getOrderItems(Model model, @PathVariable int id) {
+        if (!isLoggedIn()) {
+            return "redirect:/sign-in";
+        }
         try {
             Order singleOrder = orderRepository.findById(id);
             //List<OrderItem> foundOrderItems = orderItemRepository.findByOrderId(id);
@@ -170,6 +206,15 @@ public class MyController {
         }
     }
 
+    @GetMapping("/order-delete/{id}")
+    public String deleteOrder(@PathVariable int id) {
+        if (!isLoggedIn()) {
+            return "redirect:/sign-in";
+        }
+        orderRepository.deleteById(id);
+        return "redirect:/orders";
+    }
+
     @GetMapping("/sign-in")
     public String getSignInForm(Model model) {
         CustomerSignInDto request = new CustomerSignInDto();
@@ -183,6 +228,7 @@ public class MyController {
         if (found.isPresent()) {
             int id = found.get().getCustomerId();
             if (found.get().getPassword().equals(request.getPassword())) {
+                logIn(id);
                 return "redirect:/profile/" + id;
             }
         }
@@ -198,11 +244,14 @@ public class MyController {
     @PostMapping("/sign-up")
     public String register(CustomerCreateDto customerToCreate) {
         customerDtoService.create(customerToCreate);
-        return "redirect:/index";
+        return "redirect:/sign-in";
     }
 
     @GetMapping("/product-create")
     public String createProductForm(Model model) {
+        if (!isLoggedIn()) {
+            return "redirect:/sign-in";
+        }
         ProductCreateDto productToCreate = new ProductCreateDto();
         model.addAttribute("productToCreate", productToCreate);
         return "product-create";
@@ -210,20 +259,45 @@ public class MyController {
 
     @PostMapping("/product-create")
     public String createProduct(ProductCreateDto product) {
+
         productDtoService.createProduct(product);
+        return "redirect:/index";
+    }
+
+    @GetMapping("/product-delete/{id}")
+    public String deleteProduct(@PathVariable Integer id) {
+        if (!isLoggedIn()) {
+            return "redirect:/sign-in";
+        }
+        productRepository.deleteById(id);
         return "redirect:/index";
     }
 
     @GetMapping("/shipper-create")
     public String createShipperForm(Model model) {
+        if (!isLoggedIn()) {
+            return "redirect:/sign-in";
+        }
         ShipperCreateDto shipperToCreate = new ShipperCreateDto();
         model.addAttribute("shipperToCreate", shipperToCreate);
         return "/shipper-create";
     }
 
-    @PostMapping("shipper-create")
+    @PostMapping("/shipper-create")
     public String createShipper(ShipperCreateDto shipper) {
+
         shipperDtoService.createShipper(shipper);
         return "redirect:/shippers";
     }
+
+    @GetMapping("/shipper-delete/{id}")
+    public String deleteShipper(@PathVariable int id) {
+        if (!isLoggedIn()) {
+            return "redirect:/sign-in";
+        }
+        shipperRepository.deleteById(id);
+        return "redirect:/shippers";
+    }
+
+
 }

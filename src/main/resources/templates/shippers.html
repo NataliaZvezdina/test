@@ -37,7 +37,7 @@
                         <td th:text="${shipper.shipperId}"></td>
                         <td th:text="${shipper.name}"></td>
                         <td class="edit">&#9998;</td>
-                        <td class="delete">&#10008;</td>
+                        <td class="delete"><a th:href="@{/shipper-delete/{id}(id=${shipper.shipperId})}">&#10008;</a></td>
                     </tr>
 
                 </table>

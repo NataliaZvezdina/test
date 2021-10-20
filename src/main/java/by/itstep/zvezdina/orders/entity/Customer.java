@@ -16,6 +16,7 @@ public class Customer {
     private int points;
     private String email;
     private String password;
+    private String role;
 
     public Customer() {}
 

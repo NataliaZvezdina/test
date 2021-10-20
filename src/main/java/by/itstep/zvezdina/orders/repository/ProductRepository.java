@@ -36,6 +36,11 @@ public class ProductRepository {
                                                "SET name = ?, quantity_in_stock = ?, unit_price = ? " +
                                                "WHERE product_id = ?;";
 
+    private static final String FIND_PAGE_QUERY = "SELECT * FROM products " +
+                                                  "LIMIT ?, ?;";
+
+    private static final int NUM_OF_ELEMENTS = 5;
+
     public void create(Product product) {
         try(Connection con = ConnectionUtils.getConnection();
             PreparedStatement pstmt = con.prepareStatement(INSERT_QUERY)) {
@@ -124,6 +129,25 @@ public class ProductRepository {
         } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException("Error while deleting deleting", e);
+        }
+    }
+
+    public List<Product> getPage(int page) {
+        try(Connection con = ConnectionUtils.getConnection();
+            PreparedStatement pstmt = con.prepareStatement(FIND_PAGE_QUERY)) {
+            pstmt.setInt(1, NUM_OF_ELEMENTS * (page - 1));
+            pstmt.setInt(2, NUM_OF_ELEMENTS);
+            try(ResultSet rs = pstmt.executeQuery()) {
+                List<Product> products = new ArrayList<>();
+                while (rs.next()) {
+                    Product product = productMapper.extract(rs);
+                    products.add(product);
+                }
+                return products;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error while getting product page", e);
         }
     }
 
