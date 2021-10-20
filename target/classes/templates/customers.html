@@ -62,9 +62,11 @@
                 <table id="list-pagination">
                     <tr>
                         <td width="100%"></td>
-                        <td>&lArr;</td>
-                        <td>2</td>
-                        <td>&rArr;</td>
+                        <td th:if="${currentPage}>1">
+                            <a th:href="@{/customers?page={previous}(previous=${currentPage}-1)}">&lArr;</a>
+                        </td>
+                        <td th:text="${currentPage}"></td>
+                        <td><a th:href="@{/customers?page={next}(next=${currentPage}+1)}">&rArr;</a></td>
                     </tr>
                 </table>
 

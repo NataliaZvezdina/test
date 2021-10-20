@@ -89,13 +89,14 @@ public class MyController {
     }
 
     @GetMapping("/shippers")
-    public String getShippers(Model model) {
+    public String getShippers(Model model, @RequestParam(name = "page", defaultValue = "1") Integer page) {
         if (!isLoggedIn()) {
             return "redirect:/sign-in";
         }
         try {
-            List<Shipper> foundShippers = shipperRepository.findAll();
+            List<Shipper> foundShippers = shipperRepository.getPage(page);
             model.addAttribute("foundShippers", foundShippers);
+            model.addAttribute("currentPage", page);
             return "shippers";
         } catch (Exception e) {
             e.printStackTrace();
@@ -104,13 +105,14 @@ public class MyController {
     }
 
     @GetMapping("/customers")
-    public String getCustomers(Model model) {
+    public String getCustomers(Model model, @RequestParam(name = "page", defaultValue = "1") Integer page) {
         if (!isLoggedIn()) {
             return "redirect:/sign-in";
         }
         try {
-            List<Customer> foundCustomers = customerRepository.findAll();
+            List<Customer> foundCustomers = customerRepository.getPage(page);
             model.addAttribute("foundCustomers", foundCustomers);
+            model.addAttribute("currentPage", page);
             return "customers";
         } catch (Exception e) {
             e.printStackTrace();
@@ -158,15 +160,16 @@ public class MyController {
     }
 
     @GetMapping("/orders")
-    public String getOrders(Model model) {
+    public String getOrders(Model model, @RequestParam(name = "page", defaultValue = "1") Integer page) {
         if (!isLoggedIn()) {
             return "redirect:/sign-in";
         }
         try {
             List<Order> foundOrders = orderRepository.findAll();
-            List<OrderViewDto> foundOrderViewsDto = orderViewDtoService.findAll();
+            List<OrderViewDto> foundOrderViewsDto = orderViewDtoService.getPage(page);
             model.addAttribute("foundOrders", foundOrders);
             model.addAttribute("foundOrderViewsDto", foundOrderViewsDto);
+            model.addAttribute("currentPage", page);
             return "orders";
         } catch (Exception e) {
             e.printStackTrace();

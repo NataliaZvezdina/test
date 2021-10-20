@@ -50,7 +50,7 @@
                         <td th:text="${orderView.shippedDate}"></td>
                         <td th:text="${orderView.shipperName}"></td>
                         <td class="edit">&#9998;</td>
-                        <td class="delete">&#10008;</td>
+                        <td class="delete"><a th:href="@{/order-delete/{id}(id=${orderView.orderId})}">&#10008;</a></td>
                         <td><a th:href="@{/orders/{id}(id=${orderView.orderId})}">open</a></td>
                     </tr>
                 </table>
@@ -58,9 +58,11 @@
                 <table id="list-pagination">
                     <tr>
                         <td width="100%"></td>
-                        <td>&lArr;</td>
-                        <td>1</td>
-                        <td>&rArr;</td>
+                        <td th:if="${currentPage} > 1">
+                            <a th:href="@{/orders?page={previous}(previous=${currentPage}-1)}">&lArr;</a>
+                        </td>
+                        <td th:text="${currentPage}"></td>
+                        <td><a th:href="@{/orders?page={next}(next=${currentPage}+1)}">&rArr;</a></td>
                     </tr>
                 </table>
 

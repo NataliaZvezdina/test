@@ -42,6 +42,11 @@ public class CustomerRepository {
     private static final String DELETE_BY_ID_QUERY = "DELETE FROM customers " +
                                                      "WHERE customer_id = ?;";
 
+    private static final String FIND_PAGE_QUERY = "SELECT * FROM customers " +
+                                                  "LIMIT ?, ?;";
+
+    private static final int NUM_OF_ELEMENTS = 10;
+
     public void create(Customer customer) {
         try(Connection con = ConnectionUtils.getConnection();
             PreparedStatement pstmt = con.prepareStatement(INSERT_QUERY)) {
@@ -143,6 +148,25 @@ public class CustomerRepository {
         } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException("Error while deleting customer", e);
+        }
+    }
+
+    public List<Customer> getPage(int page) {
+        try(Connection con = ConnectionUtils.getConnection();
+            PreparedStatement pstmt = con.prepareStatement(FIND_PAGE_QUERY)) {
+            pstmt.setInt(1, NUM_OF_ELEMENTS * (page - 1));
+            pstmt.setInt(2, NUM_OF_ELEMENTS);
+            try(ResultSet rs = pstmt.executeQuery()) {
+                List<Customer> customers = new ArrayList<>();
+                while (rs.next()) {
+                    Customer customer = customerMapper.extract(rs);
+                    customers.add(customer);
+                }
+                return customers;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error while getting customer page", e);
         }
     }
 

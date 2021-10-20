@@ -36,6 +36,11 @@ public class ShipperRepository {
     private static final String DELETE_BY_ID_QUERY = "DELETE FROM shippers " +
                                                      "WHERE shipper_id = ?;";
 
+    private static final String FIND_PAGE_QUERY = "SELECT * FROM shippers " +
+                                                  "LIMIT ?, ?;";
+
+    private static final int NUM_OF_ELEMENTS = 10;
+
 
     public void create(Shipper shipper) {
         try(Connection con =  ConnectionUtils.getConnection();
@@ -124,6 +129,25 @@ public class ShipperRepository {
         } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException("Error while deleting shipper", e);
+        }
+    }
+
+    public List<Shipper> getPage(int page) {
+        try(Connection con = ConnectionUtils.getConnection();
+            PreparedStatement pstmt = con.prepareStatement(FIND_PAGE_QUERY)) {
+            pstmt.setInt(1, NUM_OF_ELEMENTS * (page - 1));
+            pstmt.setInt(2, NUM_OF_ELEMENTS);
+            try(ResultSet rs = pstmt.executeQuery()) {
+                List<Shipper> foundShippers = new ArrayList<>();
+                while (rs.next()) {
+                    Shipper shipper = shipperMapper.extract(rs);
+                    foundShippers.add(shipper);
+                }
+                return foundShippers;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error while getting shipper page", e);
         }
     }
 }
